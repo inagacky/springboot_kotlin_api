@@ -1,0 +1,18 @@
+version: '3'
+services:
+  sample_app_db:
+    build: ./db/sample_app_db 
+    container_name: sample_app_db
+    ports:
+      - 33006:3306
+    volumes:
+      - mysql-sample-app-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: sample
+      MYSQL_APP_USER: sample
+      MYSQL_APP_USER_PASSWORD: sample
+      MYSQL_DATABASE: sample 
+    restart: unless-stopped
+volumes:
+  mysql-sample-app-data:
+    driver: local

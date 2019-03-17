@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserRepository">
+    <insert id="save"
+            parameterType="com.inagacky.kotlindemo.domain.entity.sample.User">
+        INSERT INTO users
+        (
+        first_name
+        , last_name
+        , status
+        , email
+        , password
+        , created_at
+        , updated_at
+        )
+        VALUES (
+        #{firstName}
+        , #{lastName}
+        , #{status.id}
+        , #{email}
+        , #{password}
+        , CURRENT_TIMESTAMP
+        , CURRENT_TIMESTAMP
+        )
+        ;
+        <selectKey resultType="int" keyProperty="userId" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+</mapper>

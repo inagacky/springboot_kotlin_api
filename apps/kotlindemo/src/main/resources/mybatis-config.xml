@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- アンダースコア区切り (スネークケース) のカラム名をキャメルケースにマップする設定 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- SQL 内で AS によって設定された列名をマップする設定 -->
+        <setting name="useColumnLabel" value="true"/>
+    </settings>
+    <typeHandlers>
+        <typeHandler javaType='com.inagacky.kotlindemo.domain.entity.sample.User$Status' handler="com.inagacky.kotlindemo.infrastructure.handler.UserStatusTypeHandler" />
+    </typeHandlers>
+</configuration>

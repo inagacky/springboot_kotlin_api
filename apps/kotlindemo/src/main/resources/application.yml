@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    sample:
+      url: jdbc:mysql://localhost:33006/sample?allowPublicKeyRetrieval=true&useSSL=false
+      username: root
+      password: sample
+      driverClassName: com.mysql.cj.jdbc.Driver
+  jackson:
+    time-zone: Asia/Tokyo
+
+logging.level:
+  org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
