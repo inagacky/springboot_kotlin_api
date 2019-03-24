@@ -2,12 +2,13 @@ package com.inagacky.kotlindemo.application.http.Interceptor
 
 import com.inagacky.kotlindemo.configure.annotation.NonAuth
 import com.inagacky.kotlindemo.util.Logger
-import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.findAnnotation
 
 /**
  *
@@ -67,13 +68,7 @@ class AuthorizationInterceptor : HandlerInterceptor {
      */
     private fun preAuthorize(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
 
-//        val nonCustomerAuthAnnotation = AnnotationUtils.findAnnotation(handlerMethod.method, NonAuth::class.java)
-        // 特定アノテーションが付いている場合は認証を実施しない
-        val handlerMethod = handler as HandlerMethod
-        if (!handlerMethod.hasMethodAnnotation(NonAuth::class.java)) {
-            log.info(String.format("Exclude NonAuth Check URI[%s]", request.requestURI))
-            return true
-        }
+        // TODO:認可
 
         return false
     }
@@ -88,5 +83,15 @@ class AuthorizationInterceptor : HandlerInterceptor {
         response.status = HttpServletResponse.SC_UNAUTHORIZED
 
         // TODO: Please Error Action
+    }
+
+    private fun hasAuthAnotation(handler: Any) : Boolean {
+        for (member in handler::class.declaredMemberProperties) {
+            if (member.findAnnotation<NonAuth>() != null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

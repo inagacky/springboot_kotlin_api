@@ -30,7 +30,7 @@ class UserController @Autowired constructor(private val userService: UserService
      * @param userRequest
      */
     @NonAuth
-    @PostMapping(ApiRoutingConstants.API_BASE_PATH + ApiRoutingConstants.USERS_PATH)
+    @PostMapping(ApiRoutingConstants.VERSION_1_0 + ApiRoutingConstants.USERS_PATH)
     fun create(@RequestBody @Validated userRequest: UserRequest): IApiResponseResult {
 
         // リクエストモデルをエンティティに変換
@@ -39,7 +39,6 @@ class UserController @Autowired constructor(private val userService: UserService
         userService.create(user)
 
         // エンティティをレスポンスモデルに変換　
-
         return ResponseResultMapper.mappingToResponseResult(user, UserResponse::class)
     }
 

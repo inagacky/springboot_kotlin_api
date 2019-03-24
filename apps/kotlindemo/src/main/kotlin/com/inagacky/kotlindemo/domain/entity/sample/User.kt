@@ -30,16 +30,14 @@ import javax.validation.constraints.Email
     @field:NotNull
     var password: String? = null
 
-    enum class Status constructor(@get:JsonValue val int: Int) {
+    enum class Status constructor(@get:JsonValue val id: Int) {
         VALID(1),
         UNSUBSCRIBE(9);
 
         companion object {
-
             fun fromId(id: Int): Status {
-
                 return Arrays.stream(Status.values())
-                        .filter { status -> status.int == id }
+                        .filter { status -> status.id == id }
                         .findFirst().orElse(null)
             }
         }

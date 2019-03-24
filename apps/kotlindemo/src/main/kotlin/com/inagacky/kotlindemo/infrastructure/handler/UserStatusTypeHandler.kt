@@ -16,7 +16,7 @@ class UserStatusTypeHandler : BaseTypeHandler<User.Status>() {
 
     @Throws(SQLException::class)
     override fun setNonNullParameter(ps: PreparedStatement, i: Int, parameter: User.Status, jdbcType: JdbcType) {
-        ps.setInt(i, parameter.int)
+        ps.setInt(i, parameter.id)
     }
 
     @Throws(SQLException::class)
