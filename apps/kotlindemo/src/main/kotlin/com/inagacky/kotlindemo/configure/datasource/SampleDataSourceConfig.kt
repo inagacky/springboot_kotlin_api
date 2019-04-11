@@ -28,8 +28,7 @@ class SampleDataSourceConfig {
 
     @Bean(name = arrayOf("sampleDataSource"))
     @Primary
-    fun sampleDataSource(
-            @Qualifier("sampleProperties") properties: DataSourceProperties): DataSource {
+    fun sampleDataSource(@Qualifier("sampleProperties") properties: DataSourceProperties): DataSource {
 
         return properties.initializeDataSourceBuilder().build()
     }

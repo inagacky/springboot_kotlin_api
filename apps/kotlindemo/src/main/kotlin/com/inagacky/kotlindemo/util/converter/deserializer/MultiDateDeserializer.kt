@@ -45,9 +45,7 @@ class MultiDateDeserializer @JvmOverloads constructor(vc: Class<*>? = null) : St
     }
 
     companion object {
-
-        private val serialVersionUID = 1L
-
+        // サポート対象のフォーマット
         private val DATE_FORMATS = arrayOf("yyyy/MM/dd", "yyyyMMdd", "yyyy-MM-dd")
     }
 }

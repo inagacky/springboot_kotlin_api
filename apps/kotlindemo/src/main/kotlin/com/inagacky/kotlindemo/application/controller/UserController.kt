@@ -5,7 +5,6 @@ import com.inagacky.kotlindemo.application.http.response.IApiResponseResult
 import com.inagacky.kotlindemo.application.http.response.user.UserResponse
 import com.inagacky.kotlindemo.application.mapper.EntityMapper
 import com.inagacky.kotlindemo.application.mapper.ResponseResultMapper
-import com.inagacky.kotlindemo.configure.annotation.NonAuth
 import com.inagacky.kotlindemo.domain.entity.sample.User
 import com.inagacky.kotlindemo.domain.service.UserService
 import com.inagacky.kotlindemo.util.constants.ApiRoutingConstants
@@ -26,10 +25,9 @@ import org.springframework.web.bind.annotation.RestController
 class UserController @Autowired constructor(private val userService: UserService) : AbstractApiController() {
 
     /**
-     * ユーザー作成
+     * ユーザー作成API
      * @param userRequest
      */
-    @NonAuth
     @PostMapping(ApiRoutingConstants.VERSION_1_0 + ApiRoutingConstants.USERS_PATH)
     fun create(@RequestBody @Validated userRequest: UserRequest): IApiResponseResult {
 
