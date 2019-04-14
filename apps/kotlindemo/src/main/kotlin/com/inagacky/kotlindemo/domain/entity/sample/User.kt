@@ -2,10 +2,9 @@ package com.inagacky.kotlindemo.domain.entity.sample
 
 import com.fasterxml.jackson.annotation.JsonValue
 import com.inagacky.kotlindemo.util.crypto.SampleAppCryptoEncoder
+import org.apache.commons.lang3.StringUtils
 
-import javax.validation.constraints.NotNull
 import java.util.Arrays
-import javax.validation.constraints.Email
 
 /**
  * User
@@ -14,24 +13,21 @@ import javax.validation.constraints.Email
 
     var userId: Int? = null
 
-    @field:NotNull
     var firstName: String? = null
 
-    @field:NotNull
     var lastName: String? = null
 
-    @field:NotNull
     var status: Status? = null
 
-    @field:NotNull
-    @field:Email
-    var email: String? = null
+    lateinit var email: String
 
-    @field:NotNull
-    var password: String? = null
+    var loginId: String? = null
+
+    lateinit var password: String
 
     enum class Status constructor(@get:JsonValue val id: Int) {
-        VALID(1),
+        TEMPORARY(1),
+        VALID(5),
         UNSUBSCRIBE(9);
 
         companion object {
@@ -48,6 +44,23 @@ import javax.validation.constraints.Email
      */
     fun setInitData() {
         this.password = SampleAppCryptoEncoder.encrypt(this.password)
-        this.status = User.Status.VALID
+        this.loginId = this.email // ログインIDはメールアドレスとする
+        this.status = User.Status.TEMPORARY
+    }
+
+    /**
+     * 自身を引数のユーザー情報で更新する
+     */
+    fun mergeUser(user: User) {
+
+        this.firstName = user.firstName
+        this.lastName = user.lastName
+        // emailは空でない場合のみ更新する
+        if (!StringUtils.isEmpty(user.email)) {
+            this.email = user.email
+            this.loginId = user.email // ログインIDはメールアドレス
+        }
+        // passwordは空でない場合のみ更新する
+        if (!StringUtils.isEmpty(user.password)) this.password = SampleAppCryptoEncoder.encrypt(user.password)
     }
 }

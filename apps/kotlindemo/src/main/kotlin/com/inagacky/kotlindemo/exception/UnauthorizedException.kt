@@ -5,6 +5,8 @@ package com.inagacky.kotlindemo.exception
  */
 class UnauthorizedException : BaseSampleException {
 
+    override var errorMessageCode = "login_authentication.error.message"
+
     constructor(message: String) : super(message) {}
 
     constructor(cause: Throwable) : super(cause) {}

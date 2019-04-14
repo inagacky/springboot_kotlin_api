@@ -14,5 +14,5 @@ class BaseSampleRepositoryImpl : BaseRepositoryImpl(), BaseSampleRepository {
 
     @Autowired
     @Qualifier("sampleSessionTemplate")
-    protected val sqlSessionTemplate: SqlSessionTemplate? = null
+    protected lateinit var sqlSessionTemplate: SqlSessionTemplate
 }
