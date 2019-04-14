@@ -29,4 +29,26 @@
             select @@IDENTITY
         </selectKey>
     </insert>
+
+    <select id="findUserByEmail"
+            parameterType="map"
+            resultType="com.inagacky.kotlindemo.domain.entity.sample.User">
+        SELECT
+        user_id
+        , first_name
+        , last_name
+        , status
+        , email
+        , login_id
+        , password
+        , created_at
+        , updated_at
+        FROM
+          users
+        WHERE
+          email = #{email}
+          OR login_id = #{email}
+        LIMIT 1
+        ;
+    </select>
 </mapper>

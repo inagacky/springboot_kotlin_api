@@ -18,11 +18,10 @@ class ErrorResponse {
     var errorCode: ErrorCode? = null
     @JsonProperty("error_message")
     var errorMessage: String? = null
-    @JsonProperty("details")
-    var errorDetails: List<ErrorDetail>? = null
 
     enum class ErrorCode constructor(val int: Int) : JsonSerializable {
-        UNKNOWN_ERROR(100);
+        SYSTEM_ERROR(100),
+        VALIDATION_ERROR(200);
 
         @Throws(IOException::class)
         override fun serialize(jsonGenerator: JsonGenerator, provider: SerializerProvider) {

@@ -16,10 +16,10 @@ interface UserRepository : BaseSampleRepository {
     fun save(user: User)
 
     /**
-     * ログインIDをもとにユーザー情報を取得する
+     * メールアドレスを元にユーザー情報を取得する
      *
-     * @param loginId
+     * @param email
      * @return User ユーザー情報
      */
-//    fun findUserByLoginId(loginId: String) : User?
+    fun findUserByEmail(email: String) : User?
 }

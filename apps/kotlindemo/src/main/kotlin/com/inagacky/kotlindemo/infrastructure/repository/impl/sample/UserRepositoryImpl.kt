@@ -20,12 +20,12 @@ class UserRepositoryImpl : BaseSampleRepositoryImpl(), UserRepository {
      * @param user
      */
     @Throws(SampleSQLException::class)
-    override fun save(@NonNull user: User) {
+    override fun save(user: User) {
 
         val insertedCnt: Int
 
         try {
-            insertedCnt = sqlSessionTemplate!!.insert(
+            insertedCnt = sqlSessionTemplate.insert(
                     "UserRepository.save", user)
 
         } catch (e: Exception) {
@@ -37,6 +37,22 @@ class UserRepositoryImpl : BaseSampleRepositoryImpl(), UserRepository {
             log.error("The result of user information registration is 0", user)
             throw SampleSQLException("The result of user information registration is 0")
         }
+    }
+
+    /**
+     * メールアドレスを元にユーザーを取得する　
+     *
+     * @param email メールアドレス
+     *
+     */
+    @Throws(SampleSQLException::class)
+    override fun findUserByEmail(email: String) : User? {
+
+        val conditions = mapOf(
+                "email" to email
+        )
+        return sqlSessionTemplate.selectOne(
+                "UserRepository.findUserByEmail", conditions)
     }
 
 }

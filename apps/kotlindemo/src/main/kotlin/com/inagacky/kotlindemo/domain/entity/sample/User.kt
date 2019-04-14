@@ -18,11 +18,11 @@ import java.util.Arrays
 
     var status: Status? = null
 
-    var email: String? = null
+    lateinit var email: String
 
     var loginId: String? = null
 
-    var password: String? = null
+    lateinit var password: String
 
     enum class Status constructor(@get:JsonValue val id: Int) {
         TEMPORARY(1),
