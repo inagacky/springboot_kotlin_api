@@ -30,7 +30,7 @@ import java.util.Locale
 class SampleExceptionAdvice {
 
     @Autowired
-    internal var messageSource: MessageSource? = null
+    lateinit var messageSource: MessageSource
 
     private val log = Logger.getLogger(this)
 
@@ -124,19 +124,19 @@ class SampleExceptionAdvice {
         } else if (exception is UnauthorizedException) {
 
             setErrorCode(errorResponse, exception)
-            errorResponse.errorMessage = messageSource!!.getMessage("login_authentication.error.message", null, Locale.getDefault())
+            errorResponse.errorMessage = messageSource.getMessage("login_authentication.error.message", null, Locale.getDefault())
         } else if (exception is IllegalDataException) {
 
             setErrorCode(errorResponse, exception)
-            errorResponse.errorMessage = messageSource!!.getMessage("illegal_data.error.message", null, Locale.getDefault())
+            errorResponse.errorMessage = messageSource.getMessage("illegal_data.error.message", null, Locale.getDefault())
         } else if (exception is BaseSampleException) {
 
             setErrorCode(errorResponse, exception)
-            errorResponse.errorMessage = messageSource!!.getMessage("sample.error.message", null, Locale.getDefault())
+            errorResponse.errorMessage = messageSource.getMessage("sample.error.message", null, Locale.getDefault())
         } else {
             // 汎用エラー
             setErrorCode(errorResponse, exception)
-            errorResponse.errorMessage = messageSource!!.getMessage("sample.error.message", null, Locale.getDefault())
+            errorResponse.errorMessage = messageSource.getMessage("sample.error.message", null, Locale.getDefault())
         }
 
         return errorResponse
@@ -160,11 +160,11 @@ class SampleExceptionAdvice {
             setValidateErrorDetailCode(errorDetail, errorType!!)
             errorDetail.errorField = fieldError.field
 
-            val fieldName = messageSource!!.getMessage(fieldError.field, null, null, Locale.getDefault())
+            val fieldName = messageSource.getMessage(fieldError.field, null, null, Locale.getDefault())
             if (fieldName == null) {
                 errorDetail.errorMessage = fieldError.defaultMessage
             } else {
-                errorDetail.errorMessage = messageSource!!.getMessage(errorType, arrayOf(fieldName), Locale.getDefault())
+                errorDetail.errorMessage = messageSource.getMessage(errorType, arrayOf(fieldName), Locale.getDefault())
             }
 
             log.info("Error Field:[{}] Error Message:[{}]", errorDetail.errorField, errorDetail.errorMessage)

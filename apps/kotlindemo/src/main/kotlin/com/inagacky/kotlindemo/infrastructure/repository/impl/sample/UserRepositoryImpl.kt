@@ -38,4 +38,5 @@ class UserRepositoryImpl : BaseSampleRepositoryImpl(), UserRepository {
             throw SampleSQLException("The result of user information registration is 0")
         }
     }
+
 }

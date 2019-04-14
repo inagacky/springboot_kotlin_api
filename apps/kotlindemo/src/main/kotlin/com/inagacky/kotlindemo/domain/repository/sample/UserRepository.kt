@@ -9,9 +9,17 @@ import com.inagacky.kotlindemo.domain.entity.sample.User
 interface UserRepository : BaseSampleRepository {
 
     /**
-     * ユーザー情報の作成
+     * ユーザー情報の作成を行う
      *
      * @param user
      */
     fun save(user: User)
+
+    /**
+     * ログインIDをもとにユーザー情報を取得する
+     *
+     * @param loginId
+     * @return User ユーザー情報
+     */
+//    fun findUserByLoginId(loginId: String) : User?
 }

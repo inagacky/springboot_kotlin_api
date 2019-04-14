@@ -16,21 +16,12 @@ class ErrorResponse {
 
     @JsonProperty("error_code")
     var errorCode: ErrorCode? = null
-        set(errorCode) {
-            field = this.errorCode
-        }
     @JsonProperty("error_message")
     var errorMessage: String? = null
-        set(errorMessage) {
-            field = this.errorMessage
-        }
     @JsonProperty("details")
     var errorDetails: List<ErrorDetail>? = null
-        set(errorDetails) {
-            field = this.errorDetails
-        }
 
-    enum class ErrorCode private constructor(val int: Int) : JsonSerializable {
+    enum class ErrorCode constructor(val int: Int) : JsonSerializable {
         UNKNOWN_ERROR(100);
 
         @Throws(IOException::class)

@@ -5,13 +5,10 @@ import com.inagacky.kotlindemo.application.http.request.AbstractApiRequest
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotNull
 
-class UserRequest : AbstractApiRequest() {
-
-    @field:NotNull
-    var firstName: String? = null
-
-    @field:NotNull
-    var lastName: String? = null
+/**
+ * 仮顧客作成APIリクエスト
+ */
+class CreateTmpUserRequest : AbstractApiRequest() {
 
     @field:NotNull
     @field:Email

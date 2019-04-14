@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct
 class SampleAppCryptoEncoder private constructor() {
 
     @Autowired
-    private val passwordEncoder: PasswordEncoder? = null
+    private lateinit var passwordEncoder: PasswordEncoder
 
     /**
      * PasswordEncoderのインスタンス初期化
@@ -26,7 +26,7 @@ class SampleAppCryptoEncoder private constructor() {
 
     companion object {
 
-        private var staticPasswordEncoder: PasswordEncoder? = null
+        private lateinit var staticPasswordEncoder: PasswordEncoder
 
         /**
          * BCryptによる暗号化を行います。
@@ -35,7 +35,7 @@ class SampleAppCryptoEncoder private constructor() {
          */
         fun encrypt(password: String?): String {
 
-            return staticPasswordEncoder!!.encode(password)
+            return staticPasswordEncoder.encode(password)
         }
 
 
@@ -47,7 +47,7 @@ class SampleAppCryptoEncoder private constructor() {
          */
         fun matches(password: String, digest: String): Boolean {
 
-            return staticPasswordEncoder!!.matches(password, digest)
+            return staticPasswordEncoder.matches(password, digest)
         }
     }
 }

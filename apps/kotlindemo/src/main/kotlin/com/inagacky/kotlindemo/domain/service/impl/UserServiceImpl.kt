@@ -17,18 +17,18 @@ import org.springframework.transaction.annotation.Transactional
 class UserServiceImpl : BaseServiceImpl(), UserService {
 
     @Autowired
-    internal var userRepository: UserRepository? = null
+    private lateinit var userRepository: UserRepository
 
     /**
-     * ユーザー情報の作成
+     * 仮ユーザーの作成処理
      *
      * @param user
      */
-    @Transactional(rollbackFor = arrayOf(Exception::class))
+    @Transactional(rollbackFor = [Exception::class])
     @Throws(SampleSQLException::class)
-    override fun create(user: User) {
+    override fun createTmpUser(user: User) {
 
         user.setInitData()
-        userRepository!!.save(user)
+        userRepository.save(user)
     }
 }

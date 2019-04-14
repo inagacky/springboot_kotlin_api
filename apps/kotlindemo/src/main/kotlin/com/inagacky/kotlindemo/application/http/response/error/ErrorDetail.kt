@@ -14,18 +14,9 @@ import java.io.IOException
 class ErrorDetail {
 
     var errorField: String? = null
-        set(errorField) {
-            field = this.errorField
-        }
     var errorDetailCode: ErrorDetailCode? = null
-        set(errorDetailCode) {
-            field = this.errorDetailCode
-        }
     var errorMessage: String? = null
-        set(errorMessage) {
-            field = this.errorMessage
-        }
-
+    
     enum class ErrorDetailCode private constructor(val int: Int) : JsonSerializable {
         ERROR_1(201),
         ERROR_2(202);

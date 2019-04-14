@@ -6,19 +6,10 @@ import javax.validation.constraints.Email
 
 import javax.validation.constraints.NotNull
 
-class UserResponse : BaseApiResponseResult() {
+class CreateTmpUserResponse : BaseApiResponseResult() {
 
-    @field:NotNull()
     var userId: Int? = null
 
-    @field:NotNull()
-    var firstName: String? = null
-
-    @field:NotNull()
-    var lastName: String? = null
-
-    @field:NotNull()
-    @field:Email()
     var email: String? = null
 
     var status: User.Status? = null
