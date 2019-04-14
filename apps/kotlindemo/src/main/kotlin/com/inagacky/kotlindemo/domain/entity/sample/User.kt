@@ -2,6 +2,7 @@ package com.inagacky.kotlindemo.domain.entity.sample
 
 import com.fasterxml.jackson.annotation.JsonValue
 import com.inagacky.kotlindemo.util.crypto.SampleAppCryptoEncoder
+import org.apache.commons.lang3.StringUtils
 
 import java.util.Arrays
 
@@ -10,7 +11,7 @@ import java.util.Arrays
  */
  class User : BaseSampleEntity() {
 
-    var userId: Number? = null
+    var userId: Int? = null
 
     var firstName: String? = null
 
@@ -45,5 +46,21 @@ import java.util.Arrays
         this.password = SampleAppCryptoEncoder.encrypt(this.password)
         this.loginId = this.email // ログインIDはメールアドレスとする
         this.status = User.Status.TEMPORARY
+    }
+
+    /**
+     * 自身を引数のユーザー情報で更新する
+     */
+    fun mergeUser(user: User) {
+
+        this.firstName = user.firstName
+        this.lastName = user.lastName
+        // emailは空でない場合のみ更新する
+        if (!StringUtils.isEmpty(user.email)) {
+            this.email = user.email
+            this.loginId = user.email // ログインIDはメールアドレス
+        }
+        // passwordは空でない場合のみ更新する
+        if (!StringUtils.isEmpty(user.password)) this.password = SampleAppCryptoEncoder.encrypt(user.password)
     }
 }

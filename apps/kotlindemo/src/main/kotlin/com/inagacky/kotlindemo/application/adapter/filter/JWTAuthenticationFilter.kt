@@ -1,14 +1,14 @@
 package com.inagacky.kotlindemo.application.adapter.filter
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.inagacky.kotlindemo.application.http.request.authentication.AuthRequest
 import com.inagacky.kotlindemo.util.constants.ApiConstants.EXPIRATION_TIME
 import com.inagacky.kotlindemo.util.constants.ApiConstants.HEADER_STRING
 import com.inagacky.kotlindemo.util.constants.ApiConstants.SECRET
 import com.inagacky.kotlindemo.util.constants.ApiConstants.TOKEN_PREFIX
 import com.inagacky.kotlindemo.util.constants.ApiRoutingConstants.LOGIN_URL
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import lombok.extern.slf4j.Slf4j
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -72,11 +72,12 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
                                           res: HttpServletResponse,
                                           chain: FilterChain?,
                                           auth: Authentication) {
-        val token = Jwts.builder()
-                .setSubject((auth.principal as User).username)
-                .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET.toByteArray())
-                .compact()
+
+        val algorithm = Algorithm.HMAC256(SECRET)
+        val token = JWT.create()
+                .withSubject((auth.principal as User).username)
+                .withExpiresAt(Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .sign(algorithm)
 
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
     }

@@ -32,6 +32,7 @@ class SampleExceptionAdvice {
     private val log = Logger.getLogger(this)
 
     /**
+     * NotValidExceptionの捕捉
      *
      * @param exception
      * @return
@@ -47,6 +48,7 @@ class SampleExceptionAdvice {
     }
 
     /**
+     * UnauthorizedExceptionの捕捉
      *
      * @param exception
      * @return
@@ -62,6 +64,7 @@ class SampleExceptionAdvice {
     }
 
     /**
+     * IllegalDataExceptionの捕捉
      *
      * @param exception
      * @return
@@ -77,6 +80,8 @@ class SampleExceptionAdvice {
     }
 
     /**
+     * SampleExceptionの捕捉
+     *
      * @param exception
      * @return
      */
@@ -85,12 +90,14 @@ class SampleExceptionAdvice {
     @ResponseBody
     private fun handleSampleException(exception: BaseSampleException): ErrorResponse {
 
-        log.warn("BaseSampleException Error", exception)
+        log.warn("handleSampleException Error", exception)
 
         return createErrorResponse(exception)
     }
 
     /**
+     * Exceptionの捕捉
+     *
      * @param exception
      * @return
      */

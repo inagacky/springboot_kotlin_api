@@ -1,8 +1,10 @@
 package com.inagacky.kotlindemo.application.controller
 
 import com.inagacky.kotlindemo.application.http.request.user.CreateTmpUserRequest
+import com.inagacky.kotlindemo.application.http.request.user.UpdateUserRequest
 import com.inagacky.kotlindemo.application.http.response.IApiResponseResult
 import com.inagacky.kotlindemo.application.http.response.user.CreateTmpUserResponse
+import com.inagacky.kotlindemo.application.http.response.user.UpdateUserResponse
 import com.inagacky.kotlindemo.application.mapper.EntityMapper
 import com.inagacky.kotlindemo.application.mapper.ResponseResultMapper
 import com.inagacky.kotlindemo.domain.entity.sample.User
@@ -11,10 +13,7 @@ import com.inagacky.kotlindemo.util.constants.ApiRoutingConstants
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * User API Controller
@@ -28,7 +27,7 @@ class UserController: AbstractApiController() {
     private lateinit var userService: UserService
 
     /**
-     * 仮顧客作成API
+     * 仮ユーザー作成API
      * @param createTmpUserRequest
      */
     @PostMapping(ApiRoutingConstants.VERSION_1_0 + ApiRoutingConstants.USER_PATH + ApiRoutingConstants.TMP_PATH)
@@ -41,6 +40,24 @@ class UserController: AbstractApiController() {
 
         // エンティティをレスポンスモデルに変換　
         return ResponseResultMapper.mappingToResponseResult(user, CreateTmpUserResponse::class)
+    }
+
+    /**
+     * ユーザー更新API
+     *
+     * @param updateUserRequest
+     */
+    @PutMapping(ApiRoutingConstants.VERSION_1_0 + ApiRoutingConstants.USER_PATH + ApiRoutingConstants.PARAMENTER_USER_ID)
+    fun updateUser(@RequestBody @Validated updateUserRequest: UpdateUserRequest, @PathVariable("userId") userId: Int) : IApiResponseResult {
+
+        // リクエストモデルをエンティティに変換
+        val user = EntityMapper.mappingToEntity(updateUserRequest, User::class)
+        user.userId = userId
+
+        val updatedUser = userService.updateUser(user)
+
+        // エンティティをレスポンスモデルに変換　
+        return ResponseResultMapper.mappingToResponseResult(updatedUser, UpdateUserResponse::class)
     }
 
 }

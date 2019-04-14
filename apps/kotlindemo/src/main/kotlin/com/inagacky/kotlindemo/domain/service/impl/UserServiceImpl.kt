@@ -50,4 +50,34 @@ class UserServiceImpl : BaseServiceImpl(), UserService {
         user.setInitData()
         userRepository.save(user)
     }
+
+    /**
+     * ユーザーの更新処理
+     *
+     * @param paramUser
+     *
+     */
+    @Transactional(rollbackFor = [Exception::class])
+    @Throws(SampleSQLException::class, ValidationException::class)
+    override fun updateUser(paramUser: User) : User {
+
+        // 既存のユーザー情報を取得する
+        val orgUser: User = userRepository.findUserByUserId(paramUser.userId!!)
+        ?: run {
+            log.info("unknown UserId : %s", paramUser.userId)
+            val errorMessage = messageSource.getMessage("validation.error.message", null, Locale.getDefault())
+            val validationException = ValidationException(errorMessage)
+            validationException.orgErrorMessage = errorMessage
+            throw validationException
+        }
+
+        // ユーザー情報をマージ
+        orgUser.mergeUser(paramUser)
+        // ステータスを「有効に更新」
+        orgUser.status = User.Status.VALID
+        // ユーザー情報を更新
+        userRepository.update(orgUser)
+
+        return orgUser
+    }
 }

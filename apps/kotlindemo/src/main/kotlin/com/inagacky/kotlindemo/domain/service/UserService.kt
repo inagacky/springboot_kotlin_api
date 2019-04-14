@@ -19,4 +19,15 @@ interface UserService : BaseService {
      */
     @Throws(SampleSQLException::class, IllegalDataException::class)
     fun createTmpUser(user: User)
+
+    /**
+     *
+     * ユーザーの更新処理
+     *
+     * @param paramUser
+     *
+     * @return
+     */
+    @Throws(SampleSQLException::class, IllegalDataException::class)
+    fun updateUser(paramUser: User): User
 }

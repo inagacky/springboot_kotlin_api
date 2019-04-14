@@ -14,8 +14,9 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletRequest
 import java.util.ArrayList
-import io.jsonwebtoken.Jwts
+import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.security.core.GrantedAuthority
+import com.auth0.jwt.JWT
 
 /**
  * 認可のフィルタ
@@ -37,6 +38,7 @@ class JWTAuthorizationFilter(authenticationManager: AuthenticationManager) : Bas
             chain.doFilter(request, response)
             return
         }
+        // トークン情報の検証
         val authentication = verifyToken(header)
 
         SecurityContextHolder.getContext().authentication = authentication
@@ -48,11 +50,12 @@ class JWTAuthorizationFilter(authenticationManager: AuthenticationManager) : Bas
      */
     private fun verifyToken(token: String): UsernamePasswordAuthenticationToken? {
 
-        val user = Jwts.parser()
-                .setSigningKey(SECRET.toByteArray())
-                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                .getBody()
-                .getSubject()
+        val token = token.replace(TOKEN_PREFIX, "")
+        val algorithm = Algorithm.HMAC256(SECRET)
+        val verifier = JWT.require(algorithm).build()
+        val jwt = verifier.verify(token)
+
+        val user = jwt.subject
 
         return UsernamePasswordAuthenticationToken(user, null, ArrayList<GrantedAuthority>())
     }

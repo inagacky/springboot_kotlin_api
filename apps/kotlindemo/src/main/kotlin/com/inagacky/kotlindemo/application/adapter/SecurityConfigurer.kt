@@ -3,6 +3,7 @@ package com.inagacky.kotlindemo.application.adapter
 import com.inagacky.kotlindemo.application.adapter.filter.JWTAuthenticationFilter
 import com.inagacky.kotlindemo.application.adapter.filter.JWTAuthorizationFilter
 import com.inagacky.kotlindemo.util.constants.ApiRoutingConstants.CREATE_TMP_CUSTOMER_URL
+import com.inagacky.kotlindemo.util.constants.ApiRoutingConstants.LOGIN_URL
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -28,7 +29,7 @@ class SecurityConfigurer : WebSecurityConfigurerAdapter() {
 
         http.cors()
                 .and().authorizeRequests()
-                .antMatchers(CREATE_TMP_CUSTOMER_URL).permitAll()
+                .antMatchers(CREATE_TMP_CUSTOMER_URL, LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .and().csrf().disable()

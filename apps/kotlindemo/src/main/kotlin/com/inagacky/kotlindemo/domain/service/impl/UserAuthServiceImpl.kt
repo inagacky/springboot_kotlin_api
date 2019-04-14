@@ -27,13 +27,12 @@ class UserAuthServiceImpl : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(loginId: String): UserDetails {
 
-
         // ログインIDを元にレコードを取得
-//        val user: User = userRepository.findUserByLoginId(loginId)
-//                ?: throw UsernameNotFoundException(loginId)
+        val user: User = userRepository.findUserByLoginId(loginId)
+                ?: throw UsernameNotFoundException(loginId)
 
-        return SecurityUser.withUsername(loginId)
-                .password("")
+        return SecurityUser.withUsername(user.loginId)
+                .password(user.password)
                 .authorities("ROLE_USER")
                 .build()
     }

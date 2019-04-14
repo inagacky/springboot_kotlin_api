@@ -51,4 +51,61 @@
         LIMIT 1
         ;
     </select>
+
+    <select id="findUserByLoginId"
+            parameterType="map"
+            resultType="com.inagacky.kotlindemo.domain.entity.sample.User">
+        SELECT
+        user_id
+        , first_name
+        , last_name
+        , status
+        , email
+        , login_id
+        , password
+        , created_at
+        , updated_at
+        FROM
+          users
+        WHERE
+          login_id = #{loginId}
+        ;
+    </select>
+
+    <select id="findUserByUserId"
+            parameterType="map"
+            resultType="com.inagacky.kotlindemo.domain.entity.sample.User">
+        SELECT
+        user_id
+        , first_name
+        , last_name
+        , status
+        , email
+        , login_id
+        , password
+        , created_at
+        , updated_at
+        FROM
+          users
+        WHERE
+          user_id = #{userId}
+        ;
+    </select>
+
+    <update id="update"
+            parameterType="com.inagacky.kotlindemo.domain.entity.sample.User">
+        UPDATE
+          users
+        SET
+          first_name = #{firstName}
+          , last_name = #{lastName}
+          , status = #{status.id}
+          , email = #{email}
+          , login_id = #{loginId}
+          , password = #{password}
+          , updated_at = CURRENT_TIMESTAMP
+        WHERE
+          user_id = #{userId}
+        ;
+    </update>
 </mapper>
