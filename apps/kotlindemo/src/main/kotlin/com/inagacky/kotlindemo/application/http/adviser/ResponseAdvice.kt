@@ -40,6 +40,7 @@ class ResponseAdvice : ResponseBodyAdvice<Any> {
 
         val apiResponse = ApiResponse()
 
+        // レスポンスの形式によって、ステータスコードを設定
         if (body is IApiResponseResult) {
             apiResponse.statusCode = ApiResponse.StatusCode.VALID
             apiResponse.result = body

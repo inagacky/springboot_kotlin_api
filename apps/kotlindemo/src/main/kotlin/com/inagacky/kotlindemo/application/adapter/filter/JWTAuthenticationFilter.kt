@@ -73,12 +73,14 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
                                           chain: FilterChain?,
                                           auth: Authentication) {
 
+        // JWTトークンの取得
         val algorithm = Algorithm.HMAC256(SECRET)
         val token = JWT.create()
                 .withSubject((auth.principal as User).username)
                 .withExpiresAt(Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(algorithm)
 
+        // ヘッダ情報に設定
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
     }
 }

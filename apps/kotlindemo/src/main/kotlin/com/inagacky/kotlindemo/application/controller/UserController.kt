@@ -50,6 +50,8 @@ class UserController: AbstractApiController() {
     @PutMapping(ApiRoutingConstants.VERSION_1_0 + ApiRoutingConstants.USER_PATH + ApiRoutingConstants.PARAMENTER_USER_ID)
     fun updateUser(@RequestBody @Validated updateUserRequest: UpdateUserRequest, @PathVariable("userId") userId: Int) : IApiResponseResult {
 
+        //TODO:本当は自身のレコードのみ修正可能等考慮すべき
+
         // リクエストモデルをエンティティに変換
         val user = EntityMapper.mappingToEntity(updateUserRequest, User::class)
         user.userId = userId

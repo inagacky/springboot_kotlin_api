@@ -50,6 +50,7 @@ class JWTAuthorizationFilter(authenticationManager: AuthenticationManager) : Bas
      */
     private fun verifyToken(token: String): UsernamePasswordAuthenticationToken? {
 
+        // トークン情報の検証
         val token = token.replace(TOKEN_PREFIX, "")
         val algorithm = Algorithm.HMAC256(SECRET)
         val verifier = JWT.require(algorithm).build()
