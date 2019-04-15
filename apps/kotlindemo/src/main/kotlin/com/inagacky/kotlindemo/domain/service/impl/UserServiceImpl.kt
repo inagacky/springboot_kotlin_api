@@ -3,6 +3,7 @@ package com.inagacky.kotlindemo.domain.service.impl
 import com.inagacky.kotlindemo.domain.entity.sample.User
 import com.inagacky.kotlindemo.domain.repository.sample.UserRepository
 import com.inagacky.kotlindemo.domain.service.UserService
+import com.inagacky.kotlindemo.exception.IllegalDataException
 import com.inagacky.kotlindemo.exception.SampleSQLException
 import com.inagacky.kotlindemo.exception.ValidationException
 import com.inagacky.kotlindemo.util.Logger
@@ -61,15 +62,8 @@ class UserServiceImpl : BaseServiceImpl(), UserService {
     @Throws(SampleSQLException::class, ValidationException::class)
     override fun updateUser(paramUser: User) : User {
 
-        // 既存のユーザー情報を取得する
-        val orgUser: User = userRepository.findUserByUserId(paramUser.userId!!)
-        ?: run {
-            log.info("unknown UserId : %s", paramUser.userId)
-            val errorMessage = messageSource.getMessage("validation.error.message", null, Locale.getDefault())
-            val validationException = ValidationException(errorMessage)
-            validationException.orgErrorMessage = errorMessage
-            throw validationException
-        }
+        // ユーザーの取得
+        val orgUser = this.findUser(paramUser.userId!!)
 
         // ユーザー情報をマージ
         orgUser.mergeUser(paramUser)
@@ -79,5 +73,29 @@ class UserServiceImpl : BaseServiceImpl(), UserService {
         userRepository.update(orgUser)
 
         return orgUser
+    }
+
+    /**
+     *
+     * ユーザーの取得処理
+     *
+     * @param userId
+     *
+     * @return
+     */
+    @Throws(SampleSQLException::class, ValidationException::class)
+    override fun findUser(userId: Int): User {
+
+        // 既存のユーザー情報を取得する
+        val user = userRepository.findUserByUserId(userId)
+                ?: run {
+                    log.info("unknown UserId : %s", userId)
+                    val errorMessage = messageSource.getMessage("validation.error.message", null, Locale.getDefault())
+                    val validationException = ValidationException(errorMessage)
+                    validationException.orgErrorMessage = errorMessage
+                    throw validationException
+                }
+
+        return user
     }
 }
