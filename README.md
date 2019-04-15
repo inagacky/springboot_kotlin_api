@@ -6,7 +6,7 @@
 ## 認証について
 認証にはJWT(JsonWebToken)を使用しています。  
 `仮ユーザー作成API` 実行後、作成ユーザーで `ログインAPI` を叩き、  
-取得されたトークンを使用することで他のAPIが実行可能になります。
+返却されたトークンを使用することで他のAPIが実行可能になります。
 
 ## DB
 DBはmysql8.0を使用しています。  
@@ -121,3 +121,9 @@ curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzd
 `flyway`
 ### JWTライブラリ
 `com.auth0:java-jwt:3.8.0`
+
+## 使用ポート
+|ポート|用途|
+|---|---|
+|8080|APIアプリケーション|
+|33006|Mysql(Dockerコンテナ)|
