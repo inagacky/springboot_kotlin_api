@@ -3,17 +3,40 @@
 #### 下記リポジトリの内容をKotlinで作成しました。(当リポジトリの方が機能が多いです。)
 [springboot_api_example](https://github.com/inagacky/springboot_api_example)
 
+## 使用技術について
+### 言語
+`kotlin`
+### フレームワーク
+`SpringBoot`
+### ビルドツール
+`Gradle`
+### マイグレーションツール
+`flyway`
+### JWTライブラリ
+`com.auth0:java-jwt:3.8.0`
+
+## 使用ポート
+|ポート|用途|
+|---|---|
+|8080|APIアプリケーション|
+|33006|Mysql(Dockerコンテナ)|
+
 ## 認証について
 認証にはJWT(JsonWebToken)を使用しています。  
 `仮ユーザー作成API` 実行後、作成ユーザーで `ログインAPI` を叩き、  
 返却されたトークンを使用することで他のAPIが実行可能になります。
 
+## ドキュメント
+
+### DB定義書
+[DB定義書](https://github.com/inagacky/springboot_kotlin_api/blob/master/docs/db/database_design.md)
+### API定義
+エンドポイント等の説明は下記を参照してください。  
+[API定義](https://github.com/inagacky/springboot_kotlin_api/blob/master/docs/api/api_design.md)
+
 ## DB
 DBはmysql8.0を使用しています。  
 Dockerコンテナとして起動します。
-
-#### DB定義書
-[DB定義書](https://github.com/inagacky/springboot_kotlin_sample/blob/master/docs/db/database_design.md)
 
 #### 起動方法
 ##### Dockerコンテナとして起動します。
@@ -30,9 +53,6 @@ Dockerコンテナとして起動します。
 * 仮ユーザー作成API
 * ユーザー更新API
 * ユーザー情報取得API
-
-エンドポイント等の説明は下記を参照してください。  
-[API定義](https://github.com/inagacky/springboot_kotlin_sample/blob/master/docs/api/api_design.md)
 
 ## プログラム使用方法
 #### 起動
@@ -109,21 +129,3 @@ curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzd
   "status": 200
 }
 ```
-
-## 使用技術について
-### 言語
-`kotlin`
-### フレームワーク
-`SpringBoot`
-### ビルドツール
-`Gradle`
-### マイグレーションツール
-`flyway`
-### JWTライブラリ
-`com.auth0:java-jwt:3.8.0`
-
-## 使用ポート
-|ポート|用途|
-|---|---|
-|8080|APIアプリケーション|
-|33006|Mysql(Dockerコンテナ)|
